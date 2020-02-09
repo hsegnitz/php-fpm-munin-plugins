@@ -89,6 +89,9 @@ foreach ($pools as $pool => $values) {
 $result = explode("\n", shell_exec('ps auwx | grep "' . $phpbin . ': pool" | grep -v grep | grep -v phpfpm_memory'));
 foreach ($result as $row) {
 	$list = preg_split('/\s+/', $row);
+	if (count($list) < 12) {
+		continue;
+	}
 	$pools[$out[12]]['processes']++;
 	$pools[$out[12]]['ram'] += ($out[5] * 1024);
 }
