@@ -92,8 +92,8 @@ foreach ($result as $row) {
 	if (count($list) < 12) {
 		continue;
 	}
-	$pools[$out[12]]['processes']++;
-	$pools[$out[12]]['ram'] += ($out[5] * 1024);
+	$pools[$list[12]]['processes']++;
+	$pools[$list[12]]['ram'] += ($list[5] * 1024);
 }
 
 
