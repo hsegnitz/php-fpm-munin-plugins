@@ -23,7 +23,7 @@ location ~ ^/(status|ping)$ {
     deny all;
 }
 ```
-
+You might need to `allow` your global IPs if you go by domains only with their public IPs.
 
 ### munin config
 
@@ -33,11 +33,10 @@ Config needs to store pool name and domain name to access the status page.
 [phpfpm*]
   env.phpbin php-fpm
   env.pool_www localhost
-  env.pool_web1 example.org
+  env.pool_example example.org
 ```
 
-
-### links
+### symlinks
 
 * `git clone $url /opt/php-fpm-munin-plugins`
 * `chmod 777 /opt/php-fpm-munin-plugins/*.php`

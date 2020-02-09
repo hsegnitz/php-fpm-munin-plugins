@@ -2,8 +2,8 @@
 <?php
 
 /**
- * Plugin to monitor various php-fpm stats - of multiple pools if present
- * @author Holger Segnitz
+ * Plugin to monitor various php-fpm stats of multiple pools on the same machine
+ * @author Holger Segnitz (https://github.com/hsegnitz)
  */
 
 # Parameters understood:
@@ -15,8 +15,7 @@
 #		pools  (a list of pool names)
 #
 #
-# Magic markers (optional - used by munin-config and installation
-# scripts):
+# Magic markers (optional - used by munin-config and installation scripts):
 #
 #%# family=php
 #%# capabilities=autoconf
@@ -46,27 +45,6 @@ foreach ($_SERVER as $key => $value) {
 		];
 	}
 }
-
-/*
-jsegnitz 11610  0.0  0.8 486048 32576 ?        S    20:27   0:00 php-fpm: pool jsegnitz
-jsegnitz 11613  0.0  0.9 486972 38988 ?        S    20:27   0:00 php-fpm: pool jsegnitz
-hsegnitz 15504  0.0  0.7 484140 30484 ?        S    20:56   0:01 php-fpm: pool www
-hsegnitz 16562  0.0  0.4 483604 17584 ?        S    Feb07   0:00 php-fpm: pool maintenance
-jsegnitz 17628  0.0  0.9 486260 37436 ?        S    21:12   0:00 php-fpm: pool jsegnitz
-hsegnitz 18238  0.0  0.7 484116 30476 ?        S    21:15   0:01 php-fpm: pool www
-hsegnitz 18983  0.0  0.7 484120 30548 ?        S    21:24   0:00 php-fpm: pool www
-hsegnitz 19255  0.0  0.4 483604 17584 ?        S    Feb07   0:00 php-fpm: pool maintenance
-hsegnitz 20976  0.0  0.7 484088 30556 ?        S    21:37   0:00 php-fpm: pool www
-
-
-accepted conn:    40163
-pool:             www
-process manager:  dynamic
-idle processes:   6
-active processes: 0
-total processes:  6
-
-  */
 
 foreach ($pools as $pool => $values) {
 	$data = explode("\n", file_get_contents('http://' . $values['domain'] . '/status'));
