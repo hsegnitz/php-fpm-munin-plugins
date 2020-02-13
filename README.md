@@ -48,3 +48,5 @@ Config needs to store pool name and domain name to access the status page.
 
 * create a symlink for public/opcacheinfo.php into the document root of each
   domain used to monitor the respective pool.
+* be aware that opcode cache (and APC) are currently held by the master process. This means
+  the pools share this memory. If you want this not to happen, start a master process per pool

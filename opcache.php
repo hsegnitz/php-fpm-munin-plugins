@@ -36,13 +36,12 @@ foreach ($_SERVER as $key => $value) {
 	if (preg_match('/^pool_(.*)$/', $key, $out)) {
 		$pools[$out[1]] = [
 			'domain' => $value,
-			'info'   => [],
 		];
 	}
 }
 
 foreach ($pools as $pool => $values) {
-	$data = unserialize(file_get_contents('http://' . $values['domain'] . '/opcacheinfo.php'), false);
+	$data = unserialize(file_get_contents('http://' . $values['domain'] . '/opcacheinfo.php'));
 	$pools[$pool]['entries']  = $data['opcache_statistics']['num_cached_scripts'];
 	$pools[$pool]['hits']     = $data['opcache_statistics']['hits'];
 	$pools[$pool]['misses']   = $data['opcache_statistics']['misses'];
