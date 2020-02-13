@@ -42,7 +42,7 @@ foreach ($_SERVER as $key => $value) {
 }
 
 foreach ($pools as $pool => $values) {
-	$data = explode("\n", file_get_contents('http://' . $values['domain'] . '/opcachinfo.php'));
+	$data = unserialize(file_get_contents('http://' . $values['domain'] . '/opcacheinfo.php'), false);
 	$pools[$pool]['entries']  = $data['opcache_statistics']['num_cached_scripts'];
 	$pools[$pool]['hits']     = $data['opcache_statistics']['hits'];
 	$pools[$pool]['misses']   = $data['opcache_statistics']['misses'];
