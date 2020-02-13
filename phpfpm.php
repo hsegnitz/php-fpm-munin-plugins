@@ -187,6 +187,8 @@ if ($printConfig) {
     foreach ($pools as $pool => $stats) {
         echo "{$pool}_idle.label {$pool} idle\n";
         echo "{$pool}_idle.draw AREASTACK\n";
+        echo "{$pool}_idle.graph no\n";
+
         echo "{$pool}_active.label {$pool} active\n";
         echo "{$pool}_active.draw AREASTACK\n";
         echo "{$pool}_active.negative {$pool}_idle\n";

@@ -87,17 +87,19 @@ if ($printConfig) {
 
     # Create and print labels
     foreach ($pools as $pool => $stats) {
-        echo "{$pool}_hit.label {$pool} hit\n";
-        echo "{$pool}_hit.type DERIVE\n";
-        echo "{$pool}_hit.draw AREASTACK\n";
-        echo "{$pool}_hit.min 0\n";
-        echo "{$pool}_hit.max 420000\n";
-
         echo "{$pool}_miss.label {$pool} miss\n";
         echo "{$pool}_miss.type DERIVE\n";
         echo "{$pool}_miss.draw AREASTACK\n";
         echo "{$pool}_miss.min 0\n";
         echo "{$pool}_miss.max 420000\n";
+        echo "{$pool}_miss.graph no\n";
+
+        echo "{$pool}_hit.label {$pool} hit\n";
+        echo "{$pool}_hit.type DERIVE\n";
+        echo "{$pool}_hit.draw AREASTACK\n";
+        echo "{$pool}_hit.min 0\n";
+        echo "{$pool}_hit.max 420000\n";
+        echo "{$pool}_hit.negative {$pool}_miss\n";
     }
 }
 
@@ -123,9 +125,12 @@ if ($printConfig) {
     foreach ($pools as $pool => $stats) {
         echo "{$pool}_free.label {$pool} free\n";
         echo "{$pool}_free.draw AREASTACK\n";
+        echo "{$pool}_free.min 0\n";
+        echo "{$pool}_free.graph no\n";
 
         echo "{$pool}_used.label {$pool} used\n";
         echo "{$pool}_used.draw AREASTACK\n";
+        echo "{$pool}_used.min 0\n";
         echo "{$pool}_used.negative {$pool}_free\n";
     }
 
