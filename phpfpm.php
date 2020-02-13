@@ -178,7 +178,7 @@ echo "multigraph php_fpm_status\n";
 if ($printConfig) {
     # The headers
     echo "graph_title php-fpm status\n";
-    echo "graph_args --base 1000 -l 0\n";
+    echo "graph_args --base 1000\n";
     echo "graph_vlabel connections idle (-) / active (+)\n";
     echo "graph_scale yes\n";
     echo "graph_category php\n";
