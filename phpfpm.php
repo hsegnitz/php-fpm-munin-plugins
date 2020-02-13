@@ -179,23 +179,24 @@ if ($printConfig) {
     # The headers
     echo "graph_title php-fpm status\n";
     echo "graph_args --base 1000 -l 0\n";
-    echo "graph_vlabel connections\n";
+    echo "graph_vlabel connections idle (-) / active (+)\n";
     echo "graph_scale yes\n";
     echo "graph_category php\n";
 
     # Create and print labels
     foreach ($pools as $pool => $stats) {
-        echo "{$pool}_active.label {$pool} active\n";
-        echo "{$pool}_active.draw AREASTACK\n";
         echo "{$pool}_idle.label {$pool} idle\n";
         echo "{$pool}_idle.draw AREASTACK\n";
+        echo "{$pool}_active.label {$pool} active\n";
+        echo "{$pool}_active.draw AREASTACK\n";
+        echo "{$pool}_active.negative {$pool}_idle\n";
     }
 }
 
 if ($printValues) {
     foreach ($pools as $pool => $stats) {
-        echo "{$pool}_active.value {$stats['active']}\n";
         echo "{$pool}_idle.value {$stats['idle']}\n";
+        echo "{$pool}_active.value {$stats['active']}\n";
     }
 }
 
