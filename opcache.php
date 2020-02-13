@@ -115,18 +115,20 @@ if ($printConfig) {
     # The headers
     echo "graph_title php opcache memory usage\n";
     echo "graph_args --base 1024 -l 0\n";
-    echo "graph_vlabel RAM\n";
+    echo "graph_vlabel RAM free (-) / used (+)\n";
     echo "graph_scale yes\n";
     echo "graph_category php\n";
 
     # Create and print labels
     foreach ($pools as $pool => $stats) {
-        echo "{$pool}_used.label {$pool} used\n";
-        echo "{$pool}_used.draw AREASTACK\n";
-
         echo "{$pool}_free.label {$pool} free\n";
         echo "{$pool}_free.draw AREASTACK\n";
+
+        echo "{$pool}_used.label {$pool} used\n";
+        echo "{$pool}_used.draw AREASTACK\n";
+        echo "{$pool}_used.negative {$pool}_free\n";
     }
+
     echo "overhead.label total overhead\n";
     echo "overhead.draw LINE1\n";
     echo "overhead.colour 000000\n";
