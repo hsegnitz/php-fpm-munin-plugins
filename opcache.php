@@ -40,6 +40,8 @@ foreach ($_SERVER as $key => $value) {
 	}
 }
 
+ksort($pools);
+
 foreach ($pools as $pool => $values) {
 	$data = unserialize(file_get_contents('http://' . $values['domain'] . '/opcacheinfo.php'));
 	$pools[$pool]['entries']  = $data['opcache_statistics']['num_cached_scripts'];

@@ -46,6 +46,8 @@ foreach ($_SERVER as $key => $value) {
 	}
 }
 
+ksort($pools);
+
 foreach ($pools as $pool => $values) {
 	$data = explode("\n", file_get_contents('http://' . $values['domain'] . '/status'));
 	foreach ($data as $row) {
