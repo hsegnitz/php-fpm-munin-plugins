@@ -188,7 +188,7 @@ if ($printConfig) {
     # Create and print labels
     foreach ($pools as $pool => $stats) {
         echo "{$pool}.label {$pool}\n";
-        echo "{$pool}.draw AREASTACK\n";
+        echo "{$pool}.draw LINE2\n";
     }
 }
 
