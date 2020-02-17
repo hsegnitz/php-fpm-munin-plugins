@@ -65,7 +65,6 @@ if ($printConfig) {
 		echo "{$pool}.draw AREASTACK\n";
 		echo "{$pool}.min 0\n";
 	}
-}
 
 if ($printValues) {
     foreach ($pools as $pool => $stats) {
@@ -75,77 +74,69 @@ if ($printValues) {
 
 echo "\n";
 
-echo "multigraph php_opcache_hits\n";
-if ($printConfig) {
-    # The headers
-    echo "graph_title php opcache hits and misses\n";
-    echo "graph_args --base 1000 -l 0\n";
-    echo "graph_vlabel count\n";
-    echo "graph_scale yes\n";
-    echo "graph_category php\n";
+foreach ($pools as $pool => $stats) {
+	echo "multigraph php_opcache_hits_{$pool}\n";
+	if ($printConfig) {
+		# The headers
+		echo "graph_title php opcache hits and misses {$pool}\n";
+		echo "graph_args --base 1000 -l 0\n";
+		echo "graph_vlabel count\n";
+		echo "graph_scale yes\n";
+		echo "graph_category php\n";
 
-    # Create and print labels
-    foreach ($pools as $pool => $stats) {
-        echo "{$pool}_miss.label {$pool} miss\n";
-        echo "{$pool}_miss.type DERIVE\n";
-        echo "{$pool}_miss.draw AREASTACK\n";
-        echo "{$pool}_miss.min 0\n";
-        echo "{$pool}_miss.max 420000\n";
-        echo "{$pool}_miss.graph no\n";
+		# Create and print labels
+		echo "miss.label miss\n";
+		echo "miss.type DERIVE\n";
+		echo "miss.draw AREA\n";
+		echo "miss.min 0\n";
+		echo "miss.graph no\n";
+		echo "miss.max 420000\n";
 
-        echo "{$pool}_hit.label {$pool} hit\n";
-        echo "{$pool}_hit.type DERIVE\n";
-        echo "{$pool}_hit.draw AREASTACK\n";
-        echo "{$pool}_hit.min 0\n";
-        echo "{$pool}_hit.max 420000\n";
-        echo "{$pool}_hit.negative {$pool}_miss\n";
-    }
+		echo "hit.label hit\n";
+		echo "hit.type DERIVE\n";
+		echo "hit.draw AREA\n";
+		echo "hit.min 0\n";
+		echo "hit.max 420000\n";
+		echo "hit.negative miss\n";
+	}
+
+	if ($printValues) {
+		echo "hit.value {$stats['hits']}\n";
+		echo "miss.value {$stats['misses']}\n";
+	}
+
+	echo "\n";
 }
 
-if ($printValues) {
-    foreach ($pools as $pool => $stats) {
-        echo "{$pool}_hit.value {$stats['hits']}\n";
-        echo "{$pool}_miss.value {$stats['misses']}\n";
-    }
-}
+foreach ($pools as $pool => $stats) {
+    echo "multigraph php_opcache_memory_{$pool}\n";
+    if ($printConfig) {
+        # The headers
+        echo "graph_title php opcache memory usage {$pool}\n";
+        echo "graph_args --base 1024 -l 0\n";
+        echo "graph_vlabel memory in bytes\n";
+        echo "graph_scale yes\n";
+        echo "graph_category php\n";
 
-echo "\n";
+        # Create and print labels
+        echo "free.label free\n";
+        echo "free.draw AREASTACK\n";
+        echo "free.min 0\n";
 
-echo "multigraph php_opcache_memory\n";
-if ($printConfig) {
-    # The headers
-    echo "graph_title php opcache memory usage\n";
-    echo "graph_args --base 1024 -l 0\n";
-    echo "graph_vlabel RAM free (-) / used (+)\n";
-    echo "graph_scale yes\n";
-    echo "graph_category php\n";
+        echo "used.label used\n";
+        echo "used.draw AREASTACK\n";
+        echo "used.min 0\n";
 
-    # Create and print labels
-    foreach ($pools as $pool => $stats) {
-        echo "{$pool}_free.label {$pool} free\n";
-        echo "{$pool}_free.draw AREASTACK\n";
-        echo "{$pool}_free.min 0\n";
-        echo "{$pool}_free.graph no\n";
-
-        echo "{$pool}_used.label {$pool} used\n";
-        echo "{$pool}_used.draw AREASTACK\n";
-        echo "{$pool}_used.min 0\n";
-        echo "{$pool}_used.negative {$pool}_free\n";
+        echo "overhead.label overhead\n";
+        echo "overhead.draw AREASTACK\n";
+        echo "overhead.min 0\n";
     }
 
-    echo "overhead.label total overhead\n";
-    echo "overhead.draw LINE1\n";
-    echo "overhead.colour 000000\n";
-}
-
-if ($printValues) {
-	$overhead = 0;
-    foreach ($pools as $pool => $stats) {
-        echo "{$pool}_used.value {$stats['used']}\n";
-        echo "{$pool}_free.value {$stats['free']}\n";
-        $overhead += $stats['overhead'];
+    if ($printValues) {
+        echo "used.value {$stats['used']}\n";
+        echo "free.value {$stats['free']}\n";
+        echo "overhead.value {$stats['overhead']}\n";
     }
-	echo "overhead.value {$overhead}\n";
-}
 
-echo "\n";
+	echo "\n";
+}
