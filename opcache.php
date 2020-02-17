@@ -60,11 +60,12 @@ if ($printConfig) {
     echo "graph_category php\n";
 
     # Create and print labels
-	foreach ($pools as $pool => $stats) {
-		echo "{$pool}.label {$pool}\n";
-		echo "{$pool}.draw AREASTACK\n";
-		echo "{$pool}.min 0\n";
-	}
+    foreach ($pools as $pool => $stats) {
+        echo "{$pool}.label {$pool}\n";
+        echo "{$pool}.draw AREASTACK\n";
+        echo "{$pool}.min 0\n";
+    }
+}
 
 if ($printValues) {
     foreach ($pools as $pool => $stats) {
