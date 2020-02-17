@@ -35,6 +35,10 @@ Config needs to store pool name and domain name to access the status page.
   env.phpbin php-fpm
   env.pool_www localhost
   env.pool_example example.org
+
+[opcache*]
+  env.pool_www localhost
+  env.pool_example example.org
 ```
 
 ### symlinks
@@ -49,4 +53,7 @@ Config needs to store pool name and domain name to access the status page.
 * create a symlink for public/opcacheinfo.php into the document root of each
   domain used to monitor the respective pool.
 * be aware that opcode cache (and APC) are currently held by the master process. This means
-  the pools share this memory. If you want this not to happen, start a master process per pool
+  the pools share this memory. If you want this not to happen, start a master process per pool.
+  This can be achieved by running them in docker containers, but for those, you might need to copy
+  the public/opcacheinfo.php instead of linking it.
+   
